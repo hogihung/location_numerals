@@ -6,11 +6,6 @@ class LocationNumeral
     VALID_LTRS.each { |ltr| @decoder[ltr] = (2 ** VALID_LTRS.index(ltr)) }
   end
 
-  def ltr_to_int(ltr)
-    return "Invalid argument: [#{ltr}] is not a valid letter" unless VALID_LTRS.include?(ltr)
-    2 ** VALID_LTRS.index(ltr)
-  end
-
   def int_to_lf_numeral(number)
     return "Invalid argument: [#{number}] is not a positive integer" unless valid_positive_integer?(number)
 
@@ -43,7 +38,7 @@ class LocationNumeral
     letters = numeral.chars
 
     letters.each do |ltr|
-      int += ltr_to_int(ltr)
+      int += @decoder.fetch(ltr)
     end
     int
   end
