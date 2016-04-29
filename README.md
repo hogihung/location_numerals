@@ -1,4 +1,4 @@
-# Location Numeral
+# Location Numerals
 
 ## Code challenge
 Create a class in Ruby to convert from decimal numbers to location numerals and back. This class should have 3 public facing methods:
