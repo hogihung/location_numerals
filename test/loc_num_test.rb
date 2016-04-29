@@ -11,10 +11,10 @@ class LocationNumeralTest < Minitest::Test
     assert_equal 'Invalid argument: [54] is not a valid letter', @loc_num.numeral_to_integer(54)
   end
 
-  def test_return_error_for_not_valid_integer
-    assert_equal 'Invalid argument: [-12] is not a positive integer', @loc_num.int_to_lf_numeral(-12)
-    assert_equal 'Invalid argument: [3.14] is not a positive integer', @loc_num.int_to_lf_numeral(3.14)
-  end
+#  def test_return_error_for_not_valid_integer
+#    assert_equal 'Invalid argument: [-12] is not a positive integer', @loc_num.int_to_lf_numeral(-12)
+#    assert_equal 'Invalid argument: [3.14] is not a positive integer', @loc_num.int_to_lf_numeral(3.14)
+#  end
 
   def test_integer_returns_abbr_form_location_numeral
     abbrv_form = @loc_num.int_to_lf_numeral(9)

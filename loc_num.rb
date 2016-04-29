@@ -12,28 +12,19 @@ class LocationNumeral
     current_value = 0
     long_numeral = []
 
-    sample_set = @decoder.select { |k,v| v < number }
-
     while current_value < number
-      sample_set.each do |key, value|
+      sample_set_for(number).each do |key, value|
         current_value += value if (value < number)
         long_numeral << key if (current_value <= number)
       end
       long_numeral
     end
-
-    ln = long_numeral.join
-    unless numeral_to_integer(ln) == number
-      sample_set.each do |key, value|
-        long_numeral << key if (numeral_to_integer(ln) + value == number)
-      end
-    end
-    long_numeral.sort!
-    long_numeral.join
+    calculate_remaining_numeral(long_numeral, number)
   end
 
   def numeral_to_integer(numeral)
     return "Invalid argument: [#{numeral}] is not a valid letter" unless numeral.is_a? String
+
     int     = 0
     letters = numeral.chars
 
@@ -45,9 +36,7 @@ class LocationNumeral
 
   def lf_numeral_to_abbr(lf_numeral)
     number = numeral_to_integer(lf_numeral)
-    sample_set = @decoder.select { |k,v| v < number }
-
-    reversed_sample_set = Hash[sample_set.to_a.reverse]
+    reversed_sample_set = Hash[sample_set_for(number).to_a.reverse]
 
     fn, current_value = reversed_sample_set.shift
     first_numeral = fn.dup
@@ -66,6 +55,21 @@ class LocationNumeral
   def valid_positive_integer?(number)
     return false unless (number.is_a?(Integer) && number >= 1)
     true
+  end
+
+  def sample_set_for(number)
+    @decoder.select { |k,v| v < number }
+  end
+
+  def calculate_remaining_numeral(long_numeral, number)
+    ln = long_numeral.join
+    unless numeral_to_integer(ln) == number
+      sample_set_for(number).each do |key, value|
+        long_numeral << key if (numeral_to_integer(ln) + value == number)
+      end
+    end
+    long_numeral.sort!
+    long_numeral.join
   end
 
 end
